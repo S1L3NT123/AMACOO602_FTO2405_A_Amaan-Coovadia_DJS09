@@ -27,12 +27,12 @@ const reviews = [
   },
 ];
 
-function showReviewTotal(value: number) {
+function showReviewTotal(value: number, reviewer: string) {
     if (reviewTotalDisplay) {
-      reviewTotalDisplay.innerHTML = "review total " + value.toString();
+        reviewTotalDisplay.innerHTML = "review total"  + value.toString() + "| last reviewed by " + reviewer
     } else {
       console.error("Review display element not found");
     }
   }
 
-showReviewTotal(reviews.length);
+  showReviewTotal(reviews.length, reviews[0].name)
