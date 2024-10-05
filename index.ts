@@ -27,12 +27,19 @@ const reviews = [
   },
 ];
 
-function showReviewTotal(value: number, reviewer: string) {
-    if (reviewTotalDisplay) {
-        reviewTotalDisplay.innerHTML = "review total"  + value.toString() + "| last reviewed by " + reviewer
-    } else {
-      console.error("Review display element not found");
-    }
+function showReviewTotal(value: number, reviewer: string, isLoyalty: boolean) {
+  const iconDisplay = isLoyalty ? "⭐" : "";
+  if (reviewTotalDisplay) {
+    reviewTotalDisplay.innerHTML =
+      "review total " +
+      value.toString() +
+      "| last reviewed by " +
+      reviewer +
+      " " +
+      iconDisplay;
+  } else {
+    console.error("Review display element not found");
   }
+}
 
-  showReviewTotal(reviews.length, reviews[0].name)
+showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
