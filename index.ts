@@ -1,14 +1,22 @@
-import { showReviewTotal, populateUser, showDetails } from './utils'
+import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from './utils'
 import { Price, Country } from './types'
 import { Permissions , LoyaltyUser } from './enums'
 const propertyContainer = document.querySelector(
   ".properties"
 ) as HTMLElement | null;
 const footer = document.querySelector(".footer") as HTMLElement | null;
+const reviewContainer = document.querySelector('.reviews')as HTMLElement | null;
+const container = document.querySelector('.container')as HTMLElement | null;
+const button = document.querySelector('button')as HTMLElement | null;
 
 let isLoggedIn: boolean;
 
-const reviews : any[] = [
+const reviews: { 
+  name: string; 
+  stars: number; 
+  loyaltyUser: LoyaltyUser; 
+  date: string; 
+  }[] = [
   {
       name: 'Sheia',
       stars: 5,
@@ -26,7 +34,6 @@ const reviews : any[] = [
       stars: 4,
       loyaltyUser: LoyaltyUser.SILVER_USER,
       date: '27-03-2021',
-      description: 'Great hosts, location was a bit further than said.'
   },
 ]
 ;
@@ -108,24 +115,58 @@ const properties : {
   }
 ]
 
-
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 populateUser(you.isReturning, you.firstName);
 
 
 
-for (let i = 0; i < properties.length; i++) {
-  const card = document.createElement('div')
-  card.classList.add('card')
-  card.innerHTML = properties[i].title
-  const image = document.createElement('img')
-  image.setAttribute('src', properties[i].image)
-  card.appendChild(image)
-  showDetails(you.permissions, card, properties[i].price)
-  if (propertyContainer) {
+if (propertyContainer) {
+  for (let i = 0; i < properties.length; i++) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML = properties[i].title;
+    const image = document.createElement('img');
+    image.setAttribute('src', properties[i].image);
+    card.appendChild(image);
+    showDetails(you.permissions, card, properties[i].price);
     propertyContainer.appendChild(card);
   }
+} 
+
+if (reviewContainer) {
+  showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
+} 
+
+if (button && container) {
+  button.addEventListener('click', () => {
+    addReviews(reviews);
+  });
+} 
+
+let count = 0
+function addReviews(array: {
+  name: string;
+  stars: number;
+  loyaltyUser: LoyaltyUser;
+  date: string;
+}[]): void {
+  let count = 0;
+  if (reviewContainer && container && button) {
+    if (!count) {
+      count++;
+      const topTwo = getTopTwoReviews(array);
+      for (let i = 0; i < topTwo.length; i++) {
+        const card = document.createElement('div');
+        card.classList.add('review-card');
+        card.innerHTML = `${topTwo[i].stars} stars from ${topTwo[i].name}`;
+        reviewContainer.appendChild(card);
+      }
+      container.removeChild(button); // Safely remove the button after adding reviews
+    }
+  } 
 }
+
+button.addEventListener('click', () => addReviews(reviews))
 
 let currentLocation: [string, string, number] = ["London", "11:35", 17];
 if (footer) {
