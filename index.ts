@@ -1,12 +1,8 @@
-import {
-  showReviewTotal,
-  populateUser,
-  showDetails,
-  getTopTwoReviews,
-} from "./utils";
+import {showReviewTotal,populateUser,showDetails,getTopTwoReviews,} from "./utils";
 import { Price, Country } from "./types";
 import { Permissions, LoyaltyUser } from "./enums";
-import Review from "./interfaces";
+import { Review, Property} from './interfaces'
+import MainProperty from "./classes";
 const propertyContainer = document.querySelector(
   ".properties"
 ) as HTMLElement | null;
@@ -62,74 +58,60 @@ const you = {
   stayedAt: ["florida-home", "oman-flat", "tokyo-bungalow"],
 };
 
-interface Property {
-  image: string;
-  title: string;
-  price: Price;
-  location: {
-    firstLine: string;
-    city: string;
-    code: number | string;
-    country: Country;
-  };
-  contact: [number, string];
-  isAvailable: boolean;
-}
-
-const properties: Property[] = [
+const properties : Property[] = [
   {
-    image: "images/colombia-property.jpg",
-    title: "Colombian Shack",
-    price: 45,
-    location: {
-      firstLine: "shack 37",
-      city: "Bogota",
-      code: 45632,
-      country: "Colombia",
-    },
-    contact: [+112343823978921, "marywinkle@gmail.com"],
-    isAvailable: true,
+      image: 'images/colombia-property.jpg',
+      title: 'Colombian Shack',
+      price: 45,
+      location: {
+          firstLine: 'shack 37',
+          city: 'Bogota',
+          code: 45632,
+          country: 'Colombia'
+      },
+      contact: [+112343823978921, 'marywinkle@gmail.com'],
+      isAvailable: true  
   },
   {
-    image: "images/poland-property.jpg",
-    title: "Polish Cottage",
-    price: 30,
-    location: {
-      firstLine: "no 23",
-      city: "Gdansk",
-      code: 343903,
-      country: "Poland",
-    },
-    contact: [+1298239028490830, "garydavis@hotmail.com"],
-    isAvailable: false,
+      image: 'images/poland-property.jpg',
+      title: 'Polish Cottage',
+      price: 30,
+      location: {
+          firstLine: 'no 23',
+          city: 'Gdansk',
+          code: 343903,
+          country: 'Poland'
+      },
+      contact: [+1298239028490830, 'garydavis@hotmail.com'],
+      isAvailable: false 
   },
   {
-    image: "images/london-property.jpg",
-    title: "London Flat",
-    price: 25,
-    location: {
-      firstLine: "flat 15",
-      city: "London",
-      code: "SW4 5XW",
-      country: "United Kingdom",
-    },
-    contact: [+34829374892553, "andyluger@aol.com"],
-    isAvailable: true,
+      image: 'images/london-property.jpg',
+      title: 'London Flat',
+      price: 25,
+      location: {
+          firstLine: 'flat 15',
+          city: 'London',
+          code: 'SW4 5XW',
+          country: 'United Kingdom',
+      },
+      contact: [+34829374892553, 'andyluger@aol.com'],
+      isAvailable: true
   },
   {
-    image: "images/malaysian-hotel.jpeg",
-    title: "Malia Hotel",
-    price: 35,
-    location: {
-      firstLine: "Room 4",
-      city: "Malia",
-      code: 45334,
-      country: "Malaysia",
-    },
-    contact: [+60349822083, "lee34@gmail.com"],
-    isAvailable: false,
-  },
-];
+      image: 'images/malaysian-hotel.jpeg',
+      title: 'Malia Hotel',
+      price: 35,
+      location: {
+          firstLine: 'Room 4',
+          city: 'Malia',
+          code: 45334,
+          country: 'Malaysia'
+      },
+      contact: [ +60349822083, 'lee34@gmail.com'],
+      isAvailable: false
+  }
+]
 
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 
@@ -196,33 +178,19 @@ if (footer) {
     "°";
 }
 
-class MainProperty {
-  src: string;
-  title: string;
-  reviews: Review[];
-  constructor(src: string, title: string, reviews: Review[]) {
-    this.src = src;
-    this.title = title;
-    this.reviews = reviews;
-  }
-}
-
 let yourMainProperty = new MainProperty(
-  "images/italian-property.jpg",
-  "Italian House",
-  [
-    {
-      name: "Olive",
+  'images/italian-property.jpg', 
+  'Italian House',
+  [{
+      name: 'Olive',
       stars: 5,
       loyaltyUser: LoyaltyUser.GOLD_USER,
-      date: "12-04-2021",
-    },
-  ]
-);
+      date: '12-04-2021'
+  }] )
 
-const mainImageContainer = document.querySelector(".main-image");
-const image = document.createElement("img");
-image.setAttribute("src", yourMainProperty.src);
+const mainImageContainer = document.querySelector('.main-image')
+const image = document.createElement('img')
+image.setAttribute('src', yourMainProperty.src)
 if (mainImageContainer) {
   mainImageContainer.appendChild(image);
 }
