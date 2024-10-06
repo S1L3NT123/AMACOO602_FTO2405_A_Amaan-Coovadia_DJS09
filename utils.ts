@@ -40,3 +40,4 @@ export function populateUser(isReturning: boolean, userName: string) {
     console.error("Username display element not found");
   }
 }
+
