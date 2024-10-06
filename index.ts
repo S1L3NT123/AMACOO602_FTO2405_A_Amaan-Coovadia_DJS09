@@ -1,6 +1,7 @@
 import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from './utils'
 import { Price, Country } from './types'
 import { Permissions , LoyaltyUser } from './enums'
+import { Review } from './interfaces'
 const propertyContainer = document.querySelector(
   ".properties"
 ) as HTMLElement | null;
@@ -11,12 +12,7 @@ const button = document.querySelector('button')as HTMLElement | null;
 
 let isLoggedIn: boolean;
 
-const reviews: { 
-  name: string; 
-  stars: number; 
-  loyaltyUser: LoyaltyUser; 
-  date: string; 
-  }[] = [
+const reviews: Review[] = [
   {
       name: 'Sheia',
       stars: 5,
@@ -161,7 +157,7 @@ function addReviews(array: {
         card.innerHTML = `${topTwo[i].stars} stars from ${topTwo[i].name}`;
         reviewContainer.appendChild(card);
       }
-      container.removeChild(button); // Safely remove the button after adding reviews
+      container.removeChild(button); 
     }
   } 
 }
