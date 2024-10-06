@@ -5,13 +5,14 @@ const userNameDisplay = document.querySelector("#user") as HTMLElement | null;
 const returningUserDisplay = document.querySelector(
   "#returning-user"
 ) as HTMLElement | null;
+import { LoyaltyUser } from "./enums";
 
 export function showReviewTotal(
   value: number,
   reviewer: string,
-  isLoyalty: boolean
+  isLoyalty: LoyaltyUser
 ) {
-  const iconDisplay = isLoyalty ? "⭐" : "";
+  const iconDisplay = LoyaltyUser.GOLD_USER? "⭐" : "";
   if (reviewTotalDisplay) {
     reviewTotalDisplay.innerHTML =
       "review total " +

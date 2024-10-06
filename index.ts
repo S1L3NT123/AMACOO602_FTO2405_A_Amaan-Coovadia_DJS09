@@ -1,4 +1,5 @@
 import { showReviewTotal, populateUser } from "./utils";
+import { Permissions, LoyaltyUser } from './enums'
 const propertyContainer = document.querySelector(
   ".properties"
 ) as HTMLElement | null;
@@ -45,15 +46,6 @@ const reviews: {
 //     stayedAt: ['florida-home', 'oman-flat', 'tokyo-bungalow']
 // }
 
-const ADMIN = 'admin'
-const READ_ONLY = 'read-only'
-
-
-enum Permissions {
-    ADMIN,
-    READ_ONLY
-}
-
 const you = {
     firstName: 'Bobby',
     lastName: 'Brown',
@@ -62,6 +54,7 @@ const you = {
     age: 35,
     stayedAt: ['florida-home', 'oman-flat', 'tokyo-bungalow']
 }
+
 const properties: {
   image: string;
   title: string;
