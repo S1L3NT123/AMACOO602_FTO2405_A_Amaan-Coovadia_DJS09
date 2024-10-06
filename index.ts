@@ -4,43 +4,44 @@ const propertyContainer = document.querySelector(
   ".properties"
 ) as HTMLElement | null;
 const footer = document.querySelector(".footer") as HTMLElement | null;
-let isOpen: boolean;
 
-const reviews : (
+let isLoggedIn: boolean;
+
+const reviews: (
+  | {
+      name: string;
+      stars: number;
+      loyaltyUser: LoyaltyUser;
+      date: string;
+    }
+  | {
+      name: string;
+      stars: number;
+      loyaltyUser: LoyaltyUser;
+      date: string;
+      description: string;
+    }
+)[] = [
   {
-  name: string;
-  stars: number;
-  loyaltyUser: LoyaltyUser;
-  date: string;   
-} |
-{
-  name: string;
-  stars: number;
-  loyaltyUser: LoyaltyUser;
-  date: string;
-  description: string;
-}
-)[]= [
-  {
-      name: 'Sheia',
-      stars: 5,
-      loyaltyUser: LoyaltyUser.GOLD_USER,
-      date: '01-04-2021'
+    name: "Sheia",
+    stars: 5,
+    loyaltyUser: LoyaltyUser.GOLD_USER,
+    date: "01-04-2021",
   },
   {
-      name: 'Andrzej',
-      stars: 3,
-      loyaltyUser: LoyaltyUser.BRONZE_USER,
-      date: '28-03-2021'
+    name: "Andrzej",
+    stars: 3,
+    loyaltyUser: LoyaltyUser.BRONZE_USER,
+    date: "28-03-2021",
   },
   {
-      name: 'Omar',
-      stars: 4,
-      loyaltyUser: LoyaltyUser.SILVER_USER,
-      date: '27-03-2021',
-      description: 'Great hosts, location was a bit further than said',
+    name: "Omar",
+    stars: 4,
+    loyaltyUser: LoyaltyUser.SILVER_USER,
+    date: "27-03-2021",
+    description: "Great hosts, location was a bit further than said",
   },
-]
+];
 
 // const you: {
 //     firstName: string;
@@ -122,6 +123,20 @@ const properties: {
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 populateUser(you.isReturning, you.firstName);
 
+let authorityStatus: any;
+isLoggedIn = false;
+function showDetails(
+  authorityStatus: boolean | Permissions,
+  element: HTMLDivElement,
+  price: number
+) {
+  if (authorityStatus) {
+    const priceDisplay = document.createElement("div");
+    priceDisplay.innerHTML = price.toString() + "/night";
+    element.appendChild(priceDisplay);
+  }
+}
+
 for (let i = 0; i < properties.length; i++) {
   const card = document.createElement("div");
   card.classList.add("card");
@@ -132,6 +147,7 @@ for (let i = 0; i < properties.length; i++) {
   if (propertyContainer) {
     propertyContainer.appendChild(card);
   }
+  showDetails(you.permissions, card, properties[i].price);
 }
 
 let currentLocation: [string, string, number] = ["London", "11:35", 17];
