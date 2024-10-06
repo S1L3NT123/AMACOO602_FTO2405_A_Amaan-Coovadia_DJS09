@@ -1,6 +1,6 @@
-import { showReviewTotal, populateUser } from "./utils";
-import { Permissions, LoyaltyUser } from "./enums";
+import { showReviewTotal, populateUser, showDetails } from './utils'
 import { Price, Country } from './types'
+import { Permissions , LoyaltyUser } from './enums'
 const propertyContainer = document.querySelector(
   ".properties"
 ) as HTMLElement | null;
@@ -8,41 +8,28 @@ const footer = document.querySelector(".footer") as HTMLElement | null;
 
 let isLoggedIn: boolean;
 
-const reviews: (
-  | {
-      name: string;
-      stars: number;
-      loyaltyUser: LoyaltyUser;
-      date: string;
-    }
-  | {
-      name: string;
-      stars: number;
-      loyaltyUser: LoyaltyUser;
-      date: string;
-      description: string;
-    }
-)[] = [
+const reviews : any[] = [
   {
-    name: "Sheia",
-    stars: 5,
-    loyaltyUser: LoyaltyUser.GOLD_USER,
-    date: "01-04-2021",
+      name: 'Sheia',
+      stars: 5,
+      loyaltyUser: LoyaltyUser.GOLD_USER,
+      date: '01-04-2021'
   },
   {
-    name: "Andrzej",
-    stars: 3,
-    loyaltyUser: LoyaltyUser.BRONZE_USER,
-    date: "28-03-2021",
+      name: 'Andrzej',
+      stars: 3,
+      loyaltyUser: LoyaltyUser.BRONZE_USER,
+      date: '28-03-2021'
   },
   {
-    name: "Omar",
-    stars: 4,
-    loyaltyUser: LoyaltyUser.SILVER_USER,
-    date: "27-03-2021",
-    description: "Great hosts, location was a bit further than said",
+      name: 'Omar',
+      stars: 4,
+      loyaltyUser: LoyaltyUser.SILVER_USER,
+      date: '27-03-2021',
+      description: 'Great hosts, location was a bit further than said.'
   },
-];
+]
+;
 
 // const you: {
 //     firstName: string;
@@ -75,7 +62,7 @@ const properties : {
       firstLine: string;
       city: string;
       code: number;
-      country: Country;
+      country: string;
   };
   contact: [ number, string ];
   isAvailable: boolean;
@@ -121,34 +108,23 @@ const properties : {
   }
 ]
 
+
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 populateUser(you.isReturning, you.firstName);
 
-let authorityStatus: any;
-isLoggedIn = false;
-function showDetails(
-  authorityStatus: boolean | Permissions,
-  element: HTMLDivElement,
-  price: number
-) {
-  if (authorityStatus) {
-    const priceDisplay = document.createElement("div");
-    priceDisplay.innerHTML = price.toString() + "/night";
-    element.appendChild(priceDisplay);
-  }
-}
+
 
 for (let i = 0; i < properties.length; i++) {
-  const card = document.createElement("div");
-  card.classList.add("card");
-  card.innerHTML = properties[i].title;
-  const image = document.createElement("img");
-  image.setAttribute("src", properties[i].image);
-  card.appendChild(image);
+  const card = document.createElement('div')
+  card.classList.add('card')
+  card.innerHTML = properties[i].title
+  const image = document.createElement('img')
+  image.setAttribute('src', properties[i].image)
+  card.appendChild(image)
+  showDetails(you.permissions, card, properties[i].price)
   if (propertyContainer) {
     propertyContainer.appendChild(card);
   }
-  showDetails(you.permissions, card, properties[i].price);
 }
 
 let currentLocation: [string, string, number] = ["London", "11:35", 17];

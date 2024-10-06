@@ -12,15 +12,9 @@ export function showReviewTotal(
   reviewer: string,
   isLoyalty: LoyaltyUser
 ) {
-  const iconDisplay = LoyaltyUser.GOLD_USER? "⭐" : "";
+  const iconDisplay = LoyaltyUser.GOLD_USER ? "⭐" : "";
   if (reviewTotalDisplay) {
-    reviewTotalDisplay.innerHTML =
-      "review total " +
-      value.toString() +
-      "| last reviewed by " +
-      reviewer +
-      " " +
-      iconDisplay;
+    reviewTotalDisplay.innerHTML = value.toString() + ' Review' + makeMultiple(value) + '| last reviewed by ' + reviewer + ' ' + iconDisplay
   } else {
     console.error("Review display element not found");
   }
@@ -42,3 +36,20 @@ export function populateUser(isReturning: boolean, userName: string) {
   }
 }
 
+export function showDetails(
+  value: boolean | Permissions,
+  element: HTMLDivElement,
+  price: number
+) {
+  if (value) {
+    const priceDisplay = document.createElement("div");
+    priceDisplay.innerHTML = price.toString() + "/night";
+    element.appendChild(priceDisplay);
+  }
+}
+
+export function makeMultiple(value: number): string {
+  if (value > 1 || value == 0) {
+    return "s";
+  } else return "";
+}
