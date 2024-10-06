@@ -10,6 +10,8 @@ const returningUserDisplay = document.querySelector(
   "#returning-user"
 ) as HTMLElement | null;
 
+let isOpen : boolean
+
 const reviews = [
   {
     name: "Sheia",
