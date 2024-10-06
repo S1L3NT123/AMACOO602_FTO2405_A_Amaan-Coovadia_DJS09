@@ -1,7 +1,7 @@
 import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from './utils'
 import { Price, Country } from './types'
 import { Permissions , LoyaltyUser } from './enums'
-import { Review } from './interfaces'
+import  Review  from './interfaces'
 const propertyContainer = document.querySelector(
   ".properties"
 ) as HTMLElement | null;
@@ -174,3 +174,29 @@ if (footer) {
     currentLocation[2] +
     "°";
 }
+
+class MainProperty {
+  src: string
+  title: string
+  reviews: Review[]
+  constructor(src: string, title: string, reviews: Review[]) {
+      this.src = src
+      this.title = title
+      this.reviews = reviews
+  }
+}
+
+let yourMainProperty = new MainProperty(
+  'images/italian-property.jpg', 
+  'Italian House',
+  [{
+      name: 'Olive',
+      stars: 5,
+      loyaltyUser: LoyaltyUser.GOLD_USER,
+      date: '12-04-2021'
+  }] )
+
+const mainImageContainer = document.querySelector('.main-image')
+const image = document.createElement('img')
+image.setAttribute('src', yourMainProperty.src)
+mainImageContainer.appendChild(image)
